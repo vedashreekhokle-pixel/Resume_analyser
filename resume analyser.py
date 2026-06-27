@@ -70,10 +70,7 @@ with st.spinner("🧠 Analyzing your resume..."):
         st.markdown(result)
 
         match_score, matching_skills, missing_skills = parse_scores(result)
-
-
-
-    # ── Charts ────────────────────────────────────────────────────
+ # ── Charts ────────────────────────────────────────────────────
     fig1 = go.Figure(go.Indicator(
         mode="gauge+number+delta",
         value=match_score,
