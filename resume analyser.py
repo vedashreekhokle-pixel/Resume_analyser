@@ -43,16 +43,6 @@ def is_resume(text):
 
 def is_valid_job_description(text):
     """Check if the job description is valid."""
-    # Must be at least 50 characters
-    if len(text.strip()) < 50:
-        return False, "Job description is too short. Please enter a detailed job description."
-
-    # Must contain at least 5 real words (not random characters)
-    words = [w for w in text.strip().split() if len(w) >= 2]
-    if len(words) < 8:
-        return False, "Job description is too short. Please enter a detailed job description."
-
-    # Check for job-related keywords
     jd_keywords = [
         "experience", "skills", "responsibilities", "requirements",
         "qualification", "role", "position", "job", "work", "team",
@@ -62,11 +52,11 @@ def is_valid_job_description(text):
         "master", "preferred", "required", "must", "will", "company",
         "organization", "department", "duties", "tasks", "looking"
     ]
-    text_lower = text.lower()
+    text_lower = text.strip().lower()
     matched = sum(1 for keyword in jd_keywords if keyword in text_lower)
 
     if matched < 3:
-        return False, "This does not look like a job description. Please paste a valid job description."
+        return False, "Please enter a valid job position (e.g. Software Engineer, Data Analyst, Marketing Manager)"
 
     return True, ""
 
@@ -84,13 +74,14 @@ job_description = st.text_area("Paste your Job Description here", height=200)
 if uploaded_file and job_description:
     if st.button("🔍 Analyse Resume", key="analyse_resume_main"):
 
-        # ── Validate Job Description first ────────────────────────
+        # ── Validate Job Description ──────────────────────────────
         is_valid_jd, jd_error = is_valid_job_description(job_description)
         if not is_valid_jd:
-            st.error(f"❌ {jd_error}")
-            st.info("💡 A valid job description should include role, responsibilities, required skills, qualifications etc.")
+            st.error("❌ Invalid Job Description!")
+            st.warning("💼 " + jd_error)
             st.stop()
 
+        # ── Extract Resume Text ───────────────────────────────────
         with st.spinner("Extracting resume text..."):
             resume_text = extract_text(uploaded_file.read())
             st.success(f"✅ Resume loaded: {len(resume_text)} characters extracted")
