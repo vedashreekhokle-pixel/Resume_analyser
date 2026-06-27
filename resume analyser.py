@@ -90,56 +90,51 @@ Be specific and actionable.
         st.plotly_chart(fig1, use_container_width=True)
 
     skills_data = {
-        "Category": ["Matched Skills", "Missing Skills"],
-        "Count":    [max(len(matching_skills), 3), max(len(missing_skills), 2)],
-    }
-    fig2 = px.bar(
-        pd.DataFrame(skills_data), x="Category", y="Count", color="Category",
-        color_discrete_map={"Matched Skills": "#00cc44", "Missing Skills": "#ff4444"},
-        title="📊 Skill Gap Analysis", text="Count"
-    )
-    fig2.update_traces(textposition="outside")
-    fig2.update_layout(showlegend=False)
-    st.plotly_chart(fig2, use_container_width=True)
-
-    section_scores = {
-        "Skills":     match_score,
-        "Experience": max(match_score - 10, 0),
-        "Education":  min(match_score + 5, 100),
-        "Keywords":   max(match_score - 5, 0),
-        "ATS Score":  max(match_score - 8, 0),
-    }
-    fig3 = go.Figure(go.Scatterpolar(
-        r=list(section_scores.values()),
-        theta=list(section_scores.keys()),
-        fill="toself",
-        fillcolor="rgba(65, 105, 225, 0.3)",
-        line=dict(color="royalblue", width=2),
-    ))
-    fig3.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 100])), title="🕸️ Resume Section Radar")
-    st.plotly_chart(fig3, use_container_width=True)
-
-    fig4 = go.Figure(go.Pie(
-        labels=["Resume Match", "Gap to Fill"],
-        values=[match_score, 100 - match_score],
-        hole=0.45,
-        marker=dict(colors=["#00cc44", "#ff4444"]),
-    ))
-    fig4.update_layout(title="🥧 Overall Match vs Gap")
-    st.plotly_chart(fig4, use_container_width=True)
-
-    # ── Summary ───────────────────────────────────────────────────
-    st.divider()
-    st.markdown(f"### 🎯 Match Score: `{match_score}/100`")
-    if match_score >= 70:
-        st.success("✅ Strong Match — Apply!")
-    elif match_score >= 40:
-        st.warning("⚠️ Average — Improve resume first")
-    else:
-        st.error("❌ Weak Match — Significant gaps")
-
-    col1, col2 = st.columns(2)
-    col1.metric("✅ Matched Skills", max(len(matching_skills), 3))
-    col2.metric("❌ Missing Skills", max(len(missing_skills), 2))
+            "Category": ["Matched Skills", "Missing Skills"],
+            "Count":    [max(len(matching_skills), 3), max(len(missing_skills), 2)],
+        }
+        fig2 = px.bar(
+            pd.DataFrame(skills_data), x="Category", y="Count", color="Category",
+            color_discrete_map={"Matched Skills": "#00cc44", "Missing Skills": "#ff4444"},
+            title="📊 Skill Gap Analysis", text="Count"
+        )
+        fig2.update_traces(textposition="outside")
+        fig2.update_layout(showlegend=False)
+        st.plotly_chart(fig2, use_container_width=True)
+        section_scores = {
+            "Skills":     match_score,
+            "Experience": max(match_score - 10, 0),
+            "Education":  min(match_score + 5, 100),
+            "Keywords":   max(match_score - 5, 0),
+            "ATS Score":  max(match_score - 8, 0),
+        }
+        fig3 = go.Figure(go.Scatterpolar(
+            r=list(section_scores.values()),
+            theta=list(section_scores.keys()),
+            fill="toself",
+            fillcolor="rgba(65, 105, 225, 0.3)",
+            line=dict(color="royalblue", width=2),
+        ))
+        fig3.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 100])), title="🕸️ Resume Section Radar")
+        st.plotly_chart(fig3, use_container_width=True)
+        fig4 = go.Figure(go.Pie(
+            labels=["Resume Match", "Gap to Fill"],
+            values=[match_score, 100 - match_score],
+            hole=0.45,
+            marker=dict(colors=["#00cc44", "#ff4444"]),
+        ))
+        fig4.update_layout(title="🥧 Overall Match vs Gap")
+        st.plotly_chart(fig4, use_container_width=True)
+        st.divider()
+        st.markdown(f"### 🎯 Match Score: `{match_score}/100`")
+        if match_score >= 70:
+            st.success("✅ Strong Match — Apply!")
+        elif match_score >= 40:
+            st.warning("⚠️ Average — Improve resume first")
+        else:
+            st.error("❌ Weak Match — Significant gaps")
+        col1, col2 = st.columns(2)
+        col1.metric("✅ Matched Skills", max(len(matching_skills), 3))
+        col2.metric("❌ Missing Skills", max(len(missing_skills), 2))
 else:
     st.warning("Please upload a PDF and enter a job description first.")
