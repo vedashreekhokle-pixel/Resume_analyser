@@ -43,20 +43,32 @@ def is_resume(text):
 
 def is_valid_job_description(text):
     """Check if the job description is valid."""
-    jd_keywords = [
-        "experience", "skills", "responsibilities", "requirements",
-        "qualification", "role", "position", "job", "work", "team",
-        "developer", "engineer", "manager", "analyst", "designer",
-        "salary", "candidate", "apply", "degree", "knowledge",
-        "proficiency", "ability", "communication", "years", "bachelor",
-        "master", "preferred", "required", "must", "will", "company",
-        "organization", "department", "duties", "tasks", "looking"
+    job_titles = [
+        "analyst", "engineer", "developer", "manager", "designer",
+        "scientist", "architect", "consultant", "specialist", "lead",
+        "director", "officer", "executive", "coordinator", "administrator",
+        "technician", "intern", "associate", "assistant", "head",
+        "data", "software", "marketing", "sales", "finance", "hr",
+        "human resources", "product", "project", "business", "operations",
+        "fullstack", "frontend", "backend", "devops", "cloud", "ml",
+        "machine learning", "artificial intelligence", "ai", "cyber",
+        "security", "network", "system", "database", "web", "mobile",
+        "ios", "android", "java", "python", "react", "node", "teacher",
+        "accountant", "doctor", "nurse", "lawyer", "content", "seo",
+        "social media", "graphic", "ui", "ux", "qa", "tester"
     ]
-    text_lower = text.strip().lower()
-    matched = sum(1 for keyword in jd_keywords if keyword in text_lower)
 
-    if matched < 3:
-        return False, "Please enter a valid job position (e.g. Software Engineer, Data Analyst, Marketing Manager)"
+    text_lower = text.strip().lower()
+
+    # Must have at least 2 characters
+    if len(text_lower) < 2:
+        return False, "Please enter a valid job position (e.g. Data Analyst, Software Engineer, Marketing Manager)"
+
+    # Check if any job title keyword matches
+    matched = any(title in text_lower for title in job_titles)
+
+    if not matched:
+        return False, "Please enter a valid job position (e.g. Data Analyst, Software Engineer, Marketing Manager)"
 
     return True, ""
 
