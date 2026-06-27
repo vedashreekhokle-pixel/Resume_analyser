@@ -64,11 +64,6 @@ Please analyze and provide:
 Be specific and actionable.
 """
 
-            with st.spinner("🧠 Analyzing your resume..."):
-                result = generate_with_groq(prompt)
-            st.markdown("## 📊 Analysis Result")
-            st.markdown(result)
-            match_score, matching_skills, missing_skills = parse_scores(result)
 
     with st.spinner("🤖 Analyzing your resume..."):
         result = generate_with_groq(prompt)
