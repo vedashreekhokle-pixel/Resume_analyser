@@ -45,7 +45,7 @@ if uploaded_file and job_description:
             resume_text = extract_text(uploaded_file.read())
             st.success(f"✅ Resume loaded: {len(resume_text)} characters extracted")
 
-            prompt = f"""
+        prompt = f"""
 You are an expert resume analyzer and career coach.
 
 RESUME:
@@ -71,7 +71,8 @@ Be specific and actionable.
         st.markdown(result)
 
         match_score, matching_skills, missing_skills = parse_scores(result)
- # ── Charts ────────────────────────────────────────────────────
+
+        # ── Charts ────────────────────────────────────────────────────
         fig1 = go.Figure(go.Indicator(
             mode="gauge+number+delta",
             value=match_score,
@@ -89,7 +90,7 @@ Be specific and actionable.
         ))
         st.plotly_chart(fig1, use_container_width=True)
 
-    skills_data = {
+        skills_data = {
             "Category": ["Matched Skills", "Missing Skills"],
             "Count":    [max(len(matching_skills), 3), max(len(missing_skills), 2)],
         }
@@ -101,6 +102,7 @@ Be specific and actionable.
         fig2.update_traces(textposition="outside")
         fig2.update_layout(showlegend=False)
         st.plotly_chart(fig2, use_container_width=True)
+
         section_scores = {
             "Skills":     match_score,
             "Experience": max(match_score - 10, 0),
@@ -117,6 +119,7 @@ Be specific and actionable.
         ))
         fig3.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 100])), title="🕸️ Resume Section Radar")
         st.plotly_chart(fig3, use_container_width=True)
+
         fig4 = go.Figure(go.Pie(
             labels=["Resume Match", "Gap to Fill"],
             values=[match_score, 100 - match_score],
@@ -125,6 +128,7 @@ Be specific and actionable.
         ))
         fig4.update_layout(title="🥧 Overall Match vs Gap")
         st.plotly_chart(fig4, use_container_width=True)
+
         st.divider()
         st.markdown(f"### 🎯 Match Score: `{match_score}/100`")
         if match_score >= 70:
@@ -133,8 +137,10 @@ Be specific and actionable.
             st.warning("⚠️ Average — Improve resume first")
         else:
             st.error("❌ Weak Match — Significant gaps")
+
         col1, col2 = st.columns(2)
         col1.metric("✅ Matched Skills", max(len(matching_skills), 3))
         col2.metric("❌ Missing Skills", max(len(missing_skills), 2))
+
 else:
     st.warning("Please upload a PDF and enter a job description first.")
