@@ -39,8 +39,11 @@ def parse_scores(result_text):
 uploaded_file = st.file_uploader("Upload your resume PDF", type=["pdf"])
 job_description = st.text_area("Paste your Job Description here", height=200)
 
-if st.button("🔍 Analyse Resume") and uploaded_file and job_description:
-    with st.spinner("Extracting resume text..."):
+# Line 42 - replace with this:
+if uploaded_file and job_description:
+    if st.button("🔍 Analyse Resume", key="analyse_resume_main"):
+        with st.spinner("Extracting resume text..."):
+    
         resume_text = extract_text(uploaded_file.read())
         st.success(f"✅ Resume loaded: {len(resume_text)} characters extracted")
 
@@ -141,6 +144,5 @@ Be specific and actionable.
     col1, col2 = st.columns(2)
     col1.metric("✅ Matched Skills", max(len(matching_skills), 3))
     col2.metric("❌ Missing Skills", max(len(missing_skills), 2))
-
-elif st.button("🔍 Analyse Resume",key="analyse_resume_btn"):
+else:
     st.warning("Please upload a PDF and enter a job description first.")
