@@ -1,8 +1,5 @@
 groq
-pymupdf
-streamlit
-plotly
-pandas
-scikit-learn
-python-dotenv
-matplotlib
+   pymupdf
+   plotly
+   pandas
+   streamlit
