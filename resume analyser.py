@@ -65,7 +65,7 @@ result = generate_with_groq(prompt)
 # ── Step 5: Display nicely ────────────────────────────────────────
 display(Markdown(result))
 # ── Install visualization libraries ──────────────────────────────
-!pip install matplotlib plotly -q
+
 
 import plotly.graph_objects as go
 import plotly.express as px
