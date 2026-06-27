@@ -53,7 +53,7 @@ RESUME:
 
 JOB DESCRIPTION:
 {job_description}
-"""
+
 
 Please analyze and provide:
 1. 🎯 Match Score (out of 100)
