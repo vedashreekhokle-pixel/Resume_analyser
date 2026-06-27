@@ -4,7 +4,7 @@
 # ── Imports ───────────────────────────────────────────────────────
 import fitz
 from groq import Groq
-from google.colab import files
+
 from IPython.display import Markdown, display
 
 # ── Groq client ───────────────────────────────────────────────────
