@@ -39,12 +39,11 @@ def parse_scores(result_text):
 uploaded_file = st.file_uploader("Upload your resume PDF", type=["pdf"])
 job_description = st.text_area("Paste your Job Description here", height=200)
 
-# Line 42 - replace with this:
 if uploaded_file and job_description:
     if st.button("🔍 Analyse Resume", key="analyse_resume_main"):
         with st.spinner("Extracting resume text..."):
-        resume_text = extract_text(uploaded_file.read())
-        st.success(f"✅ Resume loaded: {len(resume_text)} characters extracted")
+            resume_text = extract_text(uploaded_file.read())
+            st.success(f"✅ Resume loaded: {len(resume_text)} characters extracted")
 
     prompt = f"""
 You are an expert resume analyzer and career coach.
