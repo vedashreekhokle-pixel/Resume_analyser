@@ -43,7 +43,6 @@ job_description = st.text_area("Paste your Job Description here", height=200)
 if uploaded_file and job_description:
     if st.button("🔍 Analyse Resume", key="analyse_resume_main"):
         with st.spinner("Extracting resume text..."):
-    
         resume_text = extract_text(uploaded_file.read())
         st.success(f"✅ Resume loaded: {len(resume_text)} characters extracted")
 
