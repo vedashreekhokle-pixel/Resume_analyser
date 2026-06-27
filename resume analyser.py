@@ -1,5 +1,5 @@
 # ── Install dependencies ──────────────────────────────────────────
-!pip install groq pymupdf scikit-learn pandas -q
+
 
 # ── Imports ───────────────────────────────────────────────────────
 import fitz
