@@ -28,6 +28,19 @@ def extract_text(pdf_bytes):
         text += page.get_text()
     return text
 
+def is_resume(text):
+    """Check if the PDF is actually a resume."""
+    resume_keywords = [
+        "experience", "education", "skills", "work history",
+        "employment", "objective", "summary", "projects",
+        "certifications", "achievements", "references",
+        "bachelor", "master", "degree", "university", "college",
+        "internship", "volunteer", "profile", "career"
+    ]
+    text_lower = text.lower()
+    matched = sum(1 for keyword in resume_keywords if keyword in text_lower)
+    return matched >= 4  # At least 4 resume keywords must be present
+
 def parse_scores(result_text):
     match = re.search(r'(\d+)\s*(?:out of|/)\s*100', result_text, re.IGNORECASE)
     match_score = int(match.group(1)) if match else 70
@@ -44,6 +57,12 @@ if uploaded_file and job_description:
         with st.spinner("Extracting resume text..."):
             resume_text = extract_text(uploaded_file.read())
             st.success(f"✅ Resume loaded: {len(resume_text)} characters extracted")
+
+        # ── Validate if it's a resume ──────────────────────────────
+        if not is_resume(resume_text):
+            st.error("❌ This does not appear to be a resume. Please upload a valid resume PDF.")
+            st.info("💡 A valid resume should contain sections like Experience, Education, Skills, Projects, etc.")
+            st.stop()
 
         prompt = f"""
 You are an expert resume analyzer and career coach.
