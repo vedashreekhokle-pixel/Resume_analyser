@@ -45,7 +45,7 @@ if uploaded_file and job_description:
             resume_text = extract_text(uploaded_file.read())
             st.success(f"✅ Resume loaded: {len(resume_text)} characters extracted")
 
-            prompt = f"""
+prompt = f"""
 You are an expert resume analyzer and career coach.
 
 RESUME:
@@ -53,7 +53,6 @@ RESUME:
 
 JOB DESCRIPTION:
 {job_description}
-
 
 Please analyze and provide:
 1. 🎯 Match Score (out of 100)
@@ -64,6 +63,12 @@ Please analyze and provide:
 
 Be specific and actionable.
 """
+
+            with st.spinner("🧠 Analyzing your resume..."):
+                result = generate_with_groq(prompt)
+            st.markdown("## 📊 Analysis Result")
+            st.markdown(result)
+            match_score, matching_skills, missing_skills = parse_scores(result)
 
     with st.spinner("🤖 Analyzing your resume..."):
         result = generate_with_groq(prompt)
