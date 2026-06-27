@@ -142,5 +142,5 @@ Be specific and actionable.
     col1.metric("✅ Matched Skills", max(len(matching_skills), 3))
     col2.metric("❌ Missing Skills", max(len(missing_skills), 2))
 
-elif st.button("🔍 Analyse Resume"):
+elif st.button("🔍 Analyse Resume",key="analyse_resume_btn"):
     st.warning("Please upload a PDF and enter a job description first.")
