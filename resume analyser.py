@@ -72,22 +72,22 @@ Be specific and actionable.
 
         match_score, matching_skills, missing_skills = parse_scores(result)
  # ── Charts ────────────────────────────────────────────────────
-    fig1 = go.Figure(go.Indicator(
-        mode="gauge+number+delta",
-        value=match_score,
-        title={"text": "🎯 Resume Match Score", "font": {"size": 24}},
-        delta={"reference": 70, "increasing": {"color": "green"}},
-        gauge={
-            "axis": {"range": [0, 100]},
-            "bar":  {"color": "royalblue"},
-            "steps": [
-                {"range": [0,  40], "color": "#ff4444"},
-                {"range": [40, 70], "color": "#ffaa00"},
-                {"range": [70,100], "color": "#00cc44"},
-            ],
-        }
-    ))
-    st.plotly_chart(fig1, use_container_width=True)
+        fig1 = go.Figure(go.Indicator(
+            mode="gauge+number+delta",
+            value=match_score,
+            title={"text": "🎯 Resume Match Score", "font": {"size": 24}},
+            delta={"reference": 70, "increasing": {"color": "green"}},
+            gauge={
+                "axis": {"range": [0, 100]},
+                "bar": {"color": "royalblue"},
+                "steps": [
+                    {"range": [0, 40], "color": "#ff4444"},
+                    {"range": [40, 70], "color": "#ffaa00"},
+                    {"range": [70,100], "color": "#00cc44"},
+                ],
+            }
+        ))
+        st.plotly_chart(fig1, use_container_width=True)
 
     skills_data = {
         "Category": ["Matched Skills", "Missing Skills"],
